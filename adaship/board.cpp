@@ -51,25 +51,6 @@ std::vector<std::vector<char>> initializeBoard(const Config& config) {
     return std::vector<std::vector<char>>(config.boardSize, std::vector<char>(config.boardSize, ' '));
 }
 
-// Function to display the board
-// Function to display the board with letters for columns and a simplified grid
-// Function to display the board with letters for columns and both vertical and horizontal grid lines
-/*void displayBoard(const std::vector<std::vector<char>>& board) {
-    std::cout << "   ";
-    for (int i = 0; i < board.size(); ++i) {
-        char colLabel = 'A' + i;
-        std::cout << colLabel << ' ';
-    }
-    std::cout << "\n";
-
-    for (int i = 0; i < board.size(); ++i) {
-        std::cout << i << "| ";
-        for (int j = 0; j < board[i].size(); ++j) {
-            std::cout << board[i][j] << ' ';
-        }
-        std::cout << "|\n";
-    }
-}*/
 
 void displayBoard(const std::vector<std::vector<char>>& board) {
     std::cout << "   ";

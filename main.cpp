@@ -1,5 +1,7 @@
 #include <iostream>
+#include "headers/board.h"
 
 int main() {
-  std::cout << "Hello World!\n";
+  board_main();
+  //std::cout << "Hello World!\n";
 }

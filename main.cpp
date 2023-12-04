@@ -5,5 +5,4 @@
 int main() {
   menu_main();
   board_main();
-  //std::cout << "Hello World!\n";
 }

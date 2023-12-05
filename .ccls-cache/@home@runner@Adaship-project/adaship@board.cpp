@@ -88,10 +88,8 @@ int board_main() {
   
     std::vector<std::vector<char>> Board = myConfig.initializeBoard();
 
-    // Display configuration information for debugging
     std::cout << "Board Size: " << myConfig.boardSize << std::endl;
-  
-    for (const auto& boat : myConfig.boats) {
+  for (const auto& boat : myConfig.boats) {
         std::cout << "Boat: " << boat.name << ", Size: " << boat.size << std::endl;
     }
   

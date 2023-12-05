@@ -69,7 +69,7 @@ void displayBoard(const std::vector<std::vector<char>>& board) {
 
         std::cout << i + 1 << "|";
         for (int j = 0; j < board[i].size(); ++j) {
-            std::cout << " " << board[i][j] << "| ";
+            std::cout << " " << board[i][j] << "|";
         }
         std::cout << "\n";
     }

@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include "../headers/board.h"
 
 class Board {
 public:

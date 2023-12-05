@@ -3,19 +3,19 @@
 #include <vector>
 #include <string>
 
-class Boat {
+class Board {
 public:
     std::string name;
     int size;
 
     // Constructor
-    Boat(const std::string& boatName, int boatSize) : name(boatName), size(boatSize) {}
+    Board(const std::string& boatName, int boatSize) : name(boatName), size(boatSize) {}
 };
 
 class Config {
 public:
     int boardSize;
-    std::vector<Boat> boats;
+    std::vector<Board> boats;
 
     // Function to read the configuration from the 'adaship_config.ini' file
     static Config readConfig(const std::string& configFile) {
@@ -36,7 +36,7 @@ public:
                         if (boatPos != std::string::npos) {
                             std::string boatName = value.substr(0, boatPos);
                             int boatSize = std::stoi(value.substr(boatPos + 1));
-                            config.boats.push_back(Boat(boatName, boatSize));
+                            config.boats.push_back(Board(boatName, boatSize));
                         }
                     }
                 }

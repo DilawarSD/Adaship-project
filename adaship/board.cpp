@@ -4,6 +4,7 @@
 #include <string>
 #include "../headers/board.h"
 
+
 class Board {
 public:
     std::string name;

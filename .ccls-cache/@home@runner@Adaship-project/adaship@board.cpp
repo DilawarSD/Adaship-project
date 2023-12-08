@@ -1,61 +1,6 @@
 #include <iostream>
-#include <fstream>
 #include <vector>
-#include <string>
-#include "../headers/board.h"
-
-
-class Board {
-public:
-    std::string name;
-    int size;
-
-    // Constructor
-    Board(const std::string& boatName, int boatSize) : name(boatName), size(boatSize) {}
-};
-
-class Config {
-public:
-    int boardSize;
-    std::vector<Board> boats;
-
-    // Function to read the configuration from the 'adaship_config.ini' file
-    static Config readConfig(const std::string& configFile) {
-        Config config;
-        std::ifstream file(configFile);
-
-        if (file.is_open()) {
-            std::string line;
-            while (std::getline(file, line)) {
-                size_t pos = line.find(":");
-                if (pos != std::string::npos) {
-                    std::string key = line.substr(0, pos);
-                    std::string value = line.substr(pos + 1);
-                    if (key == "Board") {
-                        config.boardSize = std::stoi(value);
-                    } else if (key == "Boat") {
-                        size_t boatPos = value.find(",");
-                        if (boatPos != std::string::npos) {
-                            std::string boatName = value.substr(0, boatPos);
-                            int boatSize = std::stoi(value.substr(boatPos + 1));
-                            config.boats.push_back(Board(boatName, boatSize));
-                        }
-                    }
-                }
-            }
-            file.close();
-        } else {
-            std::cerr << "Unable to open configuration file: " << configFile << std::endl;
-        }
-
-        return config;
-    }
-
-    // Function to initialize the board based on the configuration
-    std::vector<std::vector<char>> initializeBoard() const {
-        return std::vector<std::vector<char>>(boardSize, std::vector<char>(boardSize, ' '));
-    }
-};
+#include "../headers/config.h"
 
 
 void displayBoard(const std::vector<std::vector<char>>& board) {
@@ -82,23 +27,6 @@ void displayBoard(const std::vector<std::vector<char>>& board) {
         std::cout << "----";
     }
     std::cout << "\n";
-}
-
-
-int board_main() {
-    Config myConfig = Config::readConfig("adaship_config.ini");
-  
-    std::vector<std::vector<char>> Board = myConfig.initializeBoard();
-
-    std::cout << "Board Size: " << myConfig.boardSize << std::endl;
-  for (const auto& boat : myConfig.boats) {
-        std::cout << "Boat: " << boat.name << ", Size: " << boat.size << std::endl;
-    }
-  
-    // Display the initialized board
-    displayBoard(Board);
-
-    return 0;
 }
 
 

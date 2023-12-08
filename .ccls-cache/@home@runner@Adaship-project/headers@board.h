@@ -1,4 +1,3 @@
-
 #ifndef BOARD_H
 #define BOARD_H
 
@@ -7,4 +6,4 @@
 // Declare the displayBoard function
 void displayBoard(const std::vector<std::vector<char>>& board);
 
-#endif // BOARD_H
+#endif 

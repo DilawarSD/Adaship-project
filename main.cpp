@@ -1,12 +1,18 @@
 #include <iostream>
+#include <vector>
+#include "headers/config.h"
 #include "headers/board.h"
-#include "headers/menu.h"
-#include "headers/game.h"
-#include "headers/boats.h"
 
 int main() {
-  menu_main();
-  board_main();
-  boats_main();
-  game_main();
+    // Specify the configuration file
+    std::string configFile = "adaship_config.ini";
+
+    
+    Config config = Config::readConfig(configFile);
+
+    // Initialize and display the game board
+    std::vector<std::vector<char>> board = config.initializeBoard();
+
+    // Display the board
+    displayBoard(board);
 }

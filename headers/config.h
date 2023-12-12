@@ -18,13 +18,19 @@ struct Boat {
 class Config {
 public:
     int boardSize;
-    std::vector<Boat> boats;
+
+   std::vector<Boat> getBoats() const {
+        return boats;
+    }
+
 
     // Function declarations
  static Config readConfig(const std::string& configFile);
+
     std::vector<std::vector<char>> initializeBoard() const;
 
-// Function to initialize the board based on the configuration
+private:
+    std::vector<Boat> boats;
 };
 
 

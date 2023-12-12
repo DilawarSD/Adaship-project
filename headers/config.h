@@ -6,11 +6,12 @@
 
 // Define a structure to represent boat configurations
 struct Boat {
-    std::string type;
-    int length;
+     std::string name;
+    int size;
+    std::pair<int, int> position;
 
-    // Constructor to initialize Boat
-    Boat(const std::string& boatType, int boatLength) : type(boatType), length(boatLength) {}
+    // Constructor for Boat
+    Boat(const std::string& boatName, int boatSize) : name(boatName), size(boatSize) {}
 };
 
 // Define a structure to represent game configuration

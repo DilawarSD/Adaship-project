@@ -11,17 +11,31 @@ int main() {
     
     Config config = Config::readConfig(configFile);
 
-    // Initialize and display the game board
-    std::vector<std::vector<char>> board = config.initializeBoard();
+    // Initialize manual placement board
+    std::vector<std::vector<char>> manualBoard = config.initializeBoard();
+
+    // Initialize automatic placement board
+    std::vector<std::vector<char>> autoBoard = config.initializeBoard();
 
   std::vector<Boat> boats = config.getBoats();
 
-  for (const auto& boat : boats) {
-      Ships::manualPlaceShip(boat, config, board);
-  }
+  // Place ships manually
+    for (const auto& boat : boats) {
+        Ships::manualPlaceShip(boat, config, manualBoard);
+    }
 
-    // Display the board
-    displayBoard(board);
+    // Place ships automatically
+    for (const auto& boat : boats) {
+        Ships::autoPlaceShip(boat, config, autoBoard);
+    }
+
+    // Display manual placement board
+    std::cout << "Manual Board:\n";
+    displayBoard(manualBoard);
+
+    // Display automatic placement board
+    std::cout << "\nAutomatic Board:\n";
+    displayBoard(autoBoard);
 
   return 0;
 }

@@ -3,6 +3,7 @@
 #include "../headers/boats.h"
 #include <vector>
 #include <limits>
+#include <random>
 
 bool Ships::isValidPlacement(int startRow, int startCol, int size, bool isHorizontal, const std::vector<std::vector<char>>& board) {
     // Check if the placement is within the bounds of the board
@@ -80,5 +81,37 @@ void Ships::manualPlaceShip(const Boat& boat, const Config& config, std::vector<
     }
 
     // Display the updated board
-    displayBoard(board);
+    //displayBoard(board);
+}
+
+void Ships::autoPlaceShip(const Boat& boat, const Config& config, std::vector<std::vector<char>>& board) {
+  int size = boat.size;
+  int startRow, startCol;
+  bool isHorizontal;
+
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> dis(0, config.boardSize - 1);
+  std::uniform_int_distribution<> orientation(0, 1);
+
+  do {
+      // Randomly choose starting row and column
+      startRow = dis(gen);
+      startCol = dis(gen);
+
+      // Randomly choose orientation (horizontal or vertical)
+      isHorizontal = orientation(gen) == 0;
+
+  } while (!isValidPlacement(startRow, startCol, size, isHorizontal, board));
+
+  // Update the board based on the randomly chosen valid position and orientation
+  for (int i = 0; i < size; ++i) {
+      if (isHorizontal) {
+          board[startRow][startCol + i] = 'S';  // Use 'S' to represent the ship
+      } else {
+          board[startRow + i][startCol] = 'S';  // Use 'S' to represent the ship
+      }
+  }
+
+  //displayBoard(board);
 }

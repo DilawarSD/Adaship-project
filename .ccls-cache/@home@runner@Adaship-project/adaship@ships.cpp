@@ -168,21 +168,21 @@ void Ships::manualPlaceAllShips(const std::vector<Boat>& boats, const Config& co
             }
 
             // Ask if the player wants to reset the board
-            std::cout << "Do you want to reset the board and replace the ships? (Y/N): ";
+            std::cout << "Do you want to reset the board (R) or continue (C)?: ";
             std::cin >> resetChoice;
 
             // Validate the input
-            while (toupper(resetChoice) != 'Y' && toupper(resetChoice) != 'N') {
-                std::cout << "Invalid choice. Please enter 'Y' or 'N': ";
+            while (toupper(resetChoice) != 'R' && toupper(resetChoice) != 'C') {
+                std::cout << "Invalid choice. Please enter 'R' or 'C': ";
                 std::cin >> resetChoice;
             }
 
-            if (toupper(resetChoice) == 'Y') {
+            if (toupper(resetChoice) == 'R') {
                 // Reset the board
                 resetShipboard(board);
             }
 
-        } while (toupper(resetChoice) == 'Y');
+        } while (toupper(resetChoice) == 'R');
     }
 }
 

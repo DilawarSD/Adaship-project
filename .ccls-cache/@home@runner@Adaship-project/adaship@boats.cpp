@@ -1,9 +1,15 @@
 #include <iostream>
 #include "../headers/board.h" 
 #include "../headers/boats.h"
+#include "../headers/config.h"
+#include "../headers/menu.h"
 #include <vector>
 #include <limits>
 #include <random>
+
+Ships::Ships(bool isPlayer) : isPlayer(isPlayer) {
+    // Initialize other member variables and perform other setup if needed
+}
 
 bool Ships::isValidPlacement(int startRow, int startCol, int size, bool isHorizontal, const std::vector<std::vector<char>>& board) {
     // Check if the placement is within the bounds of the board

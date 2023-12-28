@@ -3,6 +3,9 @@
 
 #include "config.h"
 #include <vector>
+#include <iostream>
+#include <random>
+#include <algorithm>
 
 class Ships {
 public:

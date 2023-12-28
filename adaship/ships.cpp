@@ -1,6 +1,6 @@
 #include <iostream>
 #include "../headers/board.h" 
-#include "../headers/boats.h"
+#include "../headers/ships.h"
 #include "../headers/config.h"
 #include "../headers/menu.h"
 #include <vector>
@@ -117,3 +117,104 @@ void Ships::autoPlaceShip(const Boat& boat, const Config& config, std::vector<st
         }
     }
 }
+
+void Ships::manualPlaceAllShips(const std::vector<Boat>& boats, const Config& config, std::vector<std::vector<char>>& board) {
+    if (isPlayer) {
+        char manualPlaceChoice;
+        char resetChoice;
+
+        do {
+            // Ask if the user wants to manually place ships
+            std::cout << "Do you want to manually place ships? (Select No for autoplacing) (Y/N): ";
+            std::cin >> manualPlaceChoice;
+
+            // Validate the input
+            while (toupper(manualPlaceChoice) != 'Y' && toupper(manualPlaceChoice) != 'N') {
+                std::cout << "Invalid choice. Please enter 'Y' or 'N': ";
+                std::cin >> manualPlaceChoice;
+            }
+
+            // Check if the user wants to manually place ships
+            if (toupper(manualPlaceChoice) == 'Y') {
+                for (size_t i = 0; i < boats.size(); ++i) {
+                    // Ask if the user wants to place the next ship (skip for the first iteration)
+                    if (i > 0) {
+                        std::cout << "Do you want to manually place the next ship? (Y/N): ";
+                        std::cin >> manualPlaceChoice;
+                        // Validate the input
+                        while (toupper(manualPlaceChoice) != 'Y' && toupper(manualPlaceChoice) != 'N') {
+                            std::cout << "Invalid choice. Please enter 'Y' or 'N': ";
+                            std::cin >> manualPlaceChoice;
+                        }
+                    }
+
+                    // Check if the user wants to manually place the ship
+                    if (toupper(manualPlaceChoice) == 'Y') {
+                        manualPlaceShip(boats[i], config, board);
+                    } else {
+                        autoPlaceShip(boats[i], config, board);
+                    }
+
+                    // Display the board after each ship placement
+                    displayBoard(board);
+                }
+            } else {
+                // Auto-placement for all ships
+                for (size_t i = 0; i < boats.size(); ++i) {
+                    autoPlaceShip(boats[i], config, board);
+                    // Display the board after each ship placement
+                    displayBoard(board);
+                }
+            }
+
+            // Ask if the player wants to reset the board
+            std::cout << "Do you want to reset the board and replace the ships? (Y/N): ";
+            std::cin >> resetChoice;
+
+            // Validate the input
+            while (toupper(resetChoice) != 'Y' && toupper(resetChoice) != 'N') {
+                std::cout << "Invalid choice. Please enter 'Y' or 'N': ";
+                std::cin >> resetChoice;
+            }
+
+            if (toupper(resetChoice) == 'Y') {
+                // Reset the board
+                resetShipboard(board);
+            }
+
+        } while (toupper(resetChoice) == 'Y');
+    }
+}
+
+bool Ships::isShipPlaced(const Boat& boat, const std::vector<std::vector<char>>& board) {
+    // Check if the entire ship is already placed on the board
+    int shipSize = boat.size;
+    int count = 0;
+
+    for (const auto& row : board) {
+        for (const auto& cell : row) {
+            if (cell == boat.name[0]) {
+                count++;
+            }
+        }
+    }
+    return count >= shipSize;  // Ship is considered placed if at least its size number of cells are found
+}
+
+bool Ships::allShipPlaced(const std::vector<Boat>& boats, const std::vector<std::vector<char>>& board) {
+    for (const auto& boat : boats) {
+        if (!isShipPlaced(boat, board)) {
+            return false;  // At least one ship is not placed
+        }
+    }
+    return true;  // All ships are placed
+}
+
+void Ships::resetShipboard(std::vector<std::vector<char>>& board) {
+    for (auto& row : board) {
+        for (auto& cell : row) {
+            cell = ' ';  // Reset the cell to empty
+        }
+    }
+}
+

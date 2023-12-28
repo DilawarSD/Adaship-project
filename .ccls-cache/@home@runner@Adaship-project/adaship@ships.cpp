@@ -1,6 +1,6 @@
 #include <iostream>
 #include "../headers/board.h" 
-#include "../headers/boats.h"
+#include "../headers/ships.h"
 #include "../headers/config.h"
 #include "../headers/menu.h"
 #include <vector>
@@ -185,7 +185,6 @@ void Ships::manualPlaceAllShips(const std::vector<Boat>& boats, const Config& co
         } while (toupper(resetChoice) == 'Y');
     }
 }
-
 
 bool Ships::isShipPlaced(const Boat& boat, const std::vector<std::vector<char>>& board) {
     // Check if the entire ship is already placed on the board

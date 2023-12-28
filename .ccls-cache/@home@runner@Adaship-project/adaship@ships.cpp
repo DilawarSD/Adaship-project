@@ -16,7 +16,6 @@ bool Ships::isValidPlacement(int startRow, int startCol, int size, bool isHorizo
     if (startRow < 0 || startRow >= board.size() || startCol < 0 || startCol >= board[0].size()) {
         return false;  // Placement is out of bounds
     }
-
     // Check if the ship fits within the board
     if (isHorizontal) {
         if (startCol + size > board[0].size()) {
@@ -127,13 +126,11 @@ void Ships::manualPlaceAllShips(const std::vector<Boat>& boats, const Config& co
             // Ask if the user wants to manually place ships
             std::cout << "Do you want to manually place ships? (Select No for autoplacing) (Y/N): ";
             std::cin >> manualPlaceChoice;
-
             // Validate the input
             while (toupper(manualPlaceChoice) != 'Y' && toupper(manualPlaceChoice) != 'N') {
                 std::cout << "Invalid choice. Please enter 'Y' or 'N': ";
                 std::cin >> manualPlaceChoice;
             }
-
             // Check if the user wants to manually place ships
             if (toupper(manualPlaceChoice) == 'Y') {
                 for (size_t i = 0; i < boats.size(); ++i) {
@@ -147,14 +144,12 @@ void Ships::manualPlaceAllShips(const std::vector<Boat>& boats, const Config& co
                             std::cin >> manualPlaceChoice;
                         }
                     }
-
                     // Check if the user wants to manually place the ship
                     if (toupper(manualPlaceChoice) == 'Y') {
                         manualPlaceShip(boats[i], config, board);
                     } else {
                         autoPlaceShip(boats[i], config, board);
                     }
-
                     // Display the board after each ship placement
                     displayBoard(board);
                 }
@@ -166,22 +161,18 @@ void Ships::manualPlaceAllShips(const std::vector<Boat>& boats, const Config& co
                     displayBoard(board);
                 }
             }
-
             // Ask if the player wants to reset the board
             std::cout << "Do you want to reset the board (R) or continue (C)?: ";
             std::cin >> resetChoice;
-
             // Validate the input
             while (toupper(resetChoice) != 'R' && toupper(resetChoice) != 'C') {
                 std::cout << "Invalid choice. Please enter 'R' or 'C': ";
                 std::cin >> resetChoice;
             }
-
             if (toupper(resetChoice) == 'R') {
                 // Reset the board
                 resetShipboard(board);
             }
-
         } while (toupper(resetChoice) == 'R');
     }
 }

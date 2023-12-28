@@ -1,3 +1,4 @@
+#include "../headers/game.h"
 #include "../headers/ships.h"
 #include "../headers/board.h"
 #include "../headers/config.h"

@@ -5,7 +5,7 @@
 #include "ships.h"
 #include "player.h"
 #include "computer.h"
-#include <iostream> // Include the necessary header for Config class
+#include <iostream> 
 
 class Game {
 public:

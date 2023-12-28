@@ -90,33 +90,30 @@ void Ships::manualPlaceShip(const Boat& boat, const Config& config, std::vector<
 }
 
 void Ships::autoPlaceShip(const Boat& boat, const Config& config, std::vector<std::vector<char>>& board) {
-  int size = boat.size;
-  int startRow, startCol;
-  bool isHorizontal;
+    int size = boat.size;
+    int startRow, startCol;
+    bool isHorizontal;
 
-  std::random_device rd;
-  std::mt19937 gen(rd());
-  std::uniform_int_distribution<> dis(0, config.boardSize - 1);
-  std::uniform_int_distribution<> orientation(0, 1);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, config.boardSize - 1);
+    std::uniform_int_distribution<> orientation(0, 1);
 
-  do {
-      // Randomly choose starting row and column
-      startRow = dis(gen);
-      startCol = dis(gen);
+    char shipSymbol = (isPlayer) ? 'S' : 'S';  // Use 'S' for player's ships
+    do {
+        // Randomly choose starting row and column
+        startRow = dis(gen);
+        startCol = dis(gen);
+        // Randomly choose orientation (horizontal or vertical)
+        isHorizontal = orientation(gen) == 0;
 
-      // Randomly choose orientation (horizontal or vertical)
-      isHorizontal = orientation(gen) == 0;
-
-  } while (!isValidPlacement(startRow, startCol, size, isHorizontal, board));
-
-  // Update the board based on the randomly chosen valid position and orientation
-  for (int i = 0; i < size; ++i) {
-      if (isHorizontal) {
-          board[startRow][startCol + i] = 'S';  // Use 'S' to represent the ship
-      } else {
-          board[startRow + i][startCol] = 'S';  // Use 'S' to represent the ship
-      }
-  }
-
-  //displayBoard(board);
+    } while (!isValidPlacement(startRow, startCol, size, isHorizontal, board));
+    // Update the board based on the randomly chosen valid position and orientation
+    for (int i = 0; i < size; ++i) {
+        if (isHorizontal) {
+            board[startRow][startCol + i] = shipSymbol;
+        } else {
+            board[startRow + i][startCol] = shipSymbol;
+        }
+    }
 }

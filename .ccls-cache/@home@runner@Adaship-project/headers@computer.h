@@ -2,6 +2,7 @@
 #define COMPUTER_H
 
 #include <vector>
+#include "game.h"
 #include "player.h"
 #include "board.h"
 #include "ships.h"

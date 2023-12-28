@@ -48,46 +48,45 @@ void Ships::manualPlaceShip(const Boat& boat, const Config& config, std::vector<
     int startRowIndex, startColIndex;
     int size = boat.size;  // Use the boat size
 
-    std::cout << "Enter the placement for " << boat.name << " (size " << size << "): ";
-
-    // Get starting position
-    std::string userInput;
-    std::cout << "Enter starting position (e.g., A1): ";
-    std::cin >> userInput;
-
-    char userInputColumn = toupper(userInput[0]);  // Convert to uppercase for consistency
-    int userInputRow = std::stoi(userInput.substr(1));  // Extract the row as an integer
-
-    // Adjust the row index to match zero-based indexing
-    startRowIndex = userInputRow - 1;
-
-    // Convert the starting column to an index
-    startColIndex = userInputColumn - 'A';
-
-    // Get orientation
-    char orientation;
-    std::cout << "Enter orientation (H for horizontal, V for vertical): ";
-    std::cin >> orientation;
-
-    // Check if the placement is valid
-    if ((orientation == 'H' || orientation == 'h') && isValidPlacement(startRowIndex, startColIndex, size, true, board)) {
-        // Update the board for horizontal placement
-        for (int i = 0; i < size; ++i) {
-            board[startRowIndex][startColIndex + i] = 'S';  // Use 'S' to represent the ship
+    while (true) {
+        std::cout << "Enter the placement for " << boat.name << " (size " << size << "): ";
+        // Get starting position
+        std::string userInput;
+        std::cout << "Enter starting position (e.g., A1): ";
+        std::cin >> userInput;
+        // Validate input format
+        if (userInput.size() < 2 || !std::isalpha(userInput[0]) || !std::isdigit(userInput[1])) {
+            std::cout << "Invalid input format. Please enter a valid starting position." << std::endl;
+            continue;  // Go to the next iteration of the loop to allow the user to re-enter
         }
-    } else if ((orientation == 'V' || orientation == 'v') && isValidPlacement(startRowIndex, startColIndex, size, false, board)) {
-        // Update the board for vertical placement
-        for (int i = 0; i < size; ++i) {
-            board[startRowIndex + i][startColIndex] = 'S';  // Use 'S' to represent the ship
+
+        char userInputColumn = toupper(userInput[0]);  // Convert to uppercase for consistency
+        int userInputRow = userInput[1] - '0';  // Convert the second character to an integer
+        // Adjust the row index to match zero-based indexing
+        startRowIndex = userInputRow - 1;
+        // Convert the starting column to an index
+        startColIndex = userInputColumn - 'A';
+        // Get orientation
+        char orientation;
+        std::cout << "Enter orientation (H for horizontal, V for vertical): ";
+        std::cin >> orientation;
+        // Check if the placement is valid
+        if ((orientation == 'H' || orientation == 'h') && isValidPlacement(startRowIndex, startColIndex, size, true, board)) {
+            // Update the board for horizontal placement
+            for (int i = 0; i < size; ++i) {
+                board[startRowIndex][startColIndex + i] = 'S';  // Use 'S' to represent the ship
+            }
+            break;  // Exit the loop if placement is valid
+        } else if ((orientation == 'V' || orientation == 'v') && isValidPlacement(startRowIndex, startColIndex, size, false, board)) {
+            // Update the board for vertical placement
+            for (int i = 0; i < size; ++i) {
+                board[startRowIndex + i][startColIndex] = 'S';  // Use 'S' to represent the ship
+            }
+            break;  // Exit the loop if placement is valid
+        } else {
+            std::cout << "Invalid placement. Please try again." << std::endl;
         }
-    } else {
-        std::cout << "Invalid placement. Please try again." << std::endl;
-        manualPlaceShip(boat, config, board);  // Retry placement
-        return;  // Return to avoid displaying the board if placement is invalid
     }
-
-    // Display the updated board
-    //displayBoard(board);
 }
 
 void Ships::autoPlaceShip(const Boat& boat, const Config& config, std::vector<std::vector<char>>& board) {

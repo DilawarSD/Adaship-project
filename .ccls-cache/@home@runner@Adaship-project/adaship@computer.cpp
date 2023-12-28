@@ -8,7 +8,7 @@
 #include <ctime>
 
 Computer::Computer() {
-  std::srand(std::time(0));// Add any necessary initialization code here
+  std::srand(std::time(0));
 }
 
 void Computer::computerMove(std::vector<std::vector<char>>& board) {

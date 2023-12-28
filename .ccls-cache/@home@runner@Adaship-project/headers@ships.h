@@ -10,11 +10,12 @@
 class Ships {
 public:
 Ships() : shipsPlaced(false) {}
-    static void manualPlaceShip(const Boat& boat, const Config& config, std::vector<std::vector<char>>& board);
 
-    static void autoPlaceShip(const Boat& boat, const Config& config, std::vector<std::vector<char>>& board);
+static bool isValidPlacement(int startRow, int startCol, int size, bool isHorizontal, const std::vector<std::vector<char>>& board);
 
-    static bool isValidPlacement(int startRow, int startCol, int size, bool isHorizontal, const std::vector<std::vector<char>>& board);
+void autoPlaceShip(const Boat& boat, const Config& config, std::vector<std::vector<char>>& board);
+
+void manualPlaceShip(const Boat& boat, const Config& config, std::vector<std::vector<char>>& board);
 
 void manualPlaceAllShips(const std::vector<Boat>& boats, const Config& config, std::vector<std::vector<char>>& board);
 

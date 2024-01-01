@@ -31,11 +31,11 @@ bool Game::checkWin(const std::vector<std::vector<char>> &board) const {
   for (const auto &row : board) {
     for (char cell : row) {
       if (cell == 'S') {
-        return false; // At least one 'A' ship is still afloat
+        return false; 
       }
     }
   }
-  return true; // All 'A' ships are sunk
+  return true; 
 }
 
 void Game::placeShips(std::vector<Boat> &boats, Ships &playerShips,
@@ -52,22 +52,18 @@ void Game::placeShips(std::vector<Boat> &boats, Ships &playerShips,
 void Game::play() {
   playerBoard = initializeBoard();
   computerBoard = initializeBoard();
-  Ships playerShips(true); // true indicates player ships
+  Ships playerShips(true); 
   Ships computerShips(false);
-
   // Get the list of boats from the configuration
   std::vector<Boat> boats = config.getBoats();
-
   // Place ships
   placeShips(boats, playerShips, computerShips, config);
-
   // Player vs Computer gameplay
   while (true) {
     // Player's turn
     std::cout << "Player's turn:" << std::endl;
     displayBoard(playerBoard,false); // Use player's board
     playerMove(computerBoard); // Pass computer's board to playerMove
-
     // Check if the player has won
     if (checkWin(computerBoard)) {
       displayBoard(
@@ -75,12 +71,10 @@ void Game::play() {
       std::cout << "Congratulations! You win!" << std::endl;
       break;
     }
-
     // Computer's turn
     std::cout << "Computer's turn:" << std::endl;
     displayBoard(computerBoard,false); // Use computer's board for display
     computerMove(playerBoard);   // Pass player's board to computerMove
-
     // Check if the computer has won
     if (checkWin(playerBoard)) {
       displayBoard(

@@ -144,13 +144,13 @@ void Ships::manualPlaceAllShips(const std::vector<Boat>& boats, const Config& co
                         autoPlaceShip(boats[i], config, board);
                     }
                     // Display the board after each ship placement
-                    displayBoard(board);
+                    displayBoard(board,false);
                 }
             } else {
                 // Auto-placement for all ships
                 for (size_t i = 0; i < boats.size(); ++i) {
                     autoPlaceShip(boats[i], config, board);
-                    displayBoard(board);
+                    displayBoard(board,false);
                 }
             }
             std::cout << "Do you want to reset the board (R) or continue (C)? : ";

@@ -42,7 +42,7 @@ void Game::placeShips(std::vector<Boat> &boats, Ships &playerShips,
                       Ships &computerShips, const Config &config) {
   // Place ships manually
   playerShips.manualPlaceAllShips(boats, config, playerBoard);
-  displayBoard(playerBoard);
+  displayBoard(playerBoard,false);
 
   for (const auto &boat : boats) {
     computerShips.autoPlaceShip(boat, config, computerBoard);
@@ -65,26 +65,26 @@ void Game::play() {
   while (true) {
     // Player's turn
     std::cout << "Player's turn:" << std::endl;
-    displayBoard(playerBoard); // Use player's board
+    displayBoard(playerBoard,false); // Use player's board
     playerMove(computerBoard); // Pass computer's board to playerMove
 
     // Check if the player has won
     if (checkWin(computerBoard)) {
       displayBoard(
-          computerBoard); // Display the final state of the computer's board
+          computerBoard,true); // Display the final state of the computer's board
       std::cout << "Congratulations! You win!" << std::endl;
       break;
     }
 
     // Computer's turn
     std::cout << "Computer's turn:" << std::endl;
-    displayBoard(computerBoard); // Use computer's board for display
+    displayBoard(computerBoard,false); // Use computer's board for display
     computerMove(playerBoard);   // Pass player's board to computerMove
 
     // Check if the computer has won
     if (checkWin(playerBoard)) {
       displayBoard(
-          playerBoard); // Display the final state of the player's board
+          playerBoard,false); // Display the final state of the player's board
       std::cout << "Computer wins! Better luck next time." << std::endl;
       break;
     }

@@ -14,7 +14,7 @@ void Player::playerMove(std::vector<std::vector<char>> &board) {
 
   while (true) {
     // Display the current state of the board
-    displayBoard(board);
+    displayBoard(board,true);
     // Get the player's move (row and column)
     std::cout
         << "Do you want to manually input your move (M) or auto-fire (A)? ";

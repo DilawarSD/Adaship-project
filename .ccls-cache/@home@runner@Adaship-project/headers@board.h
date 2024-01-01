@@ -3,7 +3,6 @@
 
 #include <vector>
 
-// Declare the displayBoard function
-void displayBoard(const std::vector<std::vector<char>>& board);
+void displayBoard(const std::vector<std::vector<char>>& board, bool hideOpponentShips);
 
 #endif 

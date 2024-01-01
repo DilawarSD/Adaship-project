@@ -153,7 +153,7 @@ void Ships::manualPlaceAllShips(const std::vector<Boat>& boats, const Config& co
                     displayBoard(board);
                 }
             }
-            std::cout << "Do you want to reset the board (R) or continue (C): ";
+            std::cout << "Do you want to reset the board (R) or continue (C)? : ";
             std::cin >> resetChoice;
             // Validate the input
             while (toupper(resetChoice) != 'R' && toupper(resetChoice) != 'C') {

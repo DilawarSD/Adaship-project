@@ -118,6 +118,9 @@ void Ships::manualPlaceAllShips(const std::vector<Boat>& boats, const Config& co
         char resetChoice;
 
         do {
+            std::vector<Boat> remainingBoats = boats;  // Initialize the list of remaining boats
+
+            // Ask if the user wants to manually place ships
             std::cout << "Do you want to manually place ships? (Select No for autoplacing) (Y/N): ";
             std::cin >> manualPlaceChoice;
             // Validate the input
@@ -125,35 +128,50 @@ void Ships::manualPlaceAllShips(const std::vector<Boat>& boats, const Config& co
                 std::cout << "Invalid choice. Please enter 'Y' or 'N': ";
                 std::cin >> manualPlaceChoice;
             }
-            // Check if the user wants to manually place ships
-            if (toupper(manualPlaceChoice) == 'Y') {
-                for (size_t i = 0; i < boats.size(); ++i) {
-                    if (i > 0) {
-                        std::cout << "Do you want to manually place the next ship? (Y/N): ";
-                        std::cin >> manualPlaceChoice;
-                        // Validate the input
-                        while (toupper(manualPlaceChoice) != 'Y' && toupper(manualPlaceChoice) != 'N') {
-                            std::cout << "Invalid choice. Please enter 'Y' or 'N': ";
-                            std::cin >> manualPlaceChoice;
-                        }
-                    }
-                    // Check if the user wants to manually place the ship
-                    if (toupper(manualPlaceChoice) == 'Y') {
-                        manualPlaceShip(boats[i], config, board);
-                    } else {
-                        autoPlaceShip(boats[i], config, board);
-                    }
-                    // Display the board after each ship placement
-                    displayBoard(board,false);
+
+            size_t boatIndex = 0;
+
+            while (toupper(manualPlaceChoice) == 'Y' && !remainingBoats.empty()) {
+                // Display the list of remaining boats and their sizes
+                std::cout << "List of remaining boats:" << std::endl;
+                for (const auto& boat : remainingBoats) {
+                    std::cout << boat.name << ", " << boat.size << std::endl;
                 }
-            } else {
-                // Auto-placement for all ships
-                for (size_t i = 0; i < boats.size(); ++i) {
-                    autoPlaceShip(boats[i], config, board);
-                    displayBoard(board,false);
+
+                // Display the name and size of the current boat
+                std::cout << "Enter the placement for " << remainingBoats[boatIndex].name << " (size " << remainingBoats[boatIndex].size << "): ";
+
+                if (toupper(manualPlaceChoice) == 'Y') {
+                    manualPlaceShip(remainingBoats[boatIndex], config, board);
+                    // Remove the placed boat from the list of remaining boats
+                    remainingBoats.erase(remainingBoats.begin() + boatIndex);
+                    // Display the board after each ship placement
+                    displayBoard(board, false);
+                } else {
+                    autoPlaceShip(remainingBoats[boatIndex], config, board);
+                    // Display the board after auto-placement
+                    displayBoard(board, false);
+                }
+
+                // Ask if the user wants to manually place the next ship
+                std::cout << "Do you want to manually place the next ship? (Y/N): ";
+                std::cin >> manualPlaceChoice;
+                // Validate the input
+                while (toupper(manualPlaceChoice) != 'Y' && toupper(manualPlaceChoice) != 'N') {
+                    std::cout << "Invalid choice. Please enter 'Y' or 'N': ";
+                    std::cin >> manualPlaceChoice;
                 }
             }
-            std::cout << "Do you want to reset the board (R) or continue (C)? : ";
+
+            // Auto-placement for the remaining ships
+            for (const auto& boat : remainingBoats) {
+                autoPlaceShip(boat, config, board);
+            }
+            // Display the board after auto-placement
+            displayBoard(board, false);
+
+            // Ask if the user wants to reset the board and replace the ships
+            std::cout << "Do you want to reset the board or continue? (R/C): ";
             std::cin >> resetChoice;
             // Validate the input
             while (toupper(resetChoice) != 'R' && toupper(resetChoice) != 'C') {
@@ -180,7 +198,6 @@ bool Ships::isShipPlaced(const Boat& boat, const std::vector<std::vector<char>>&
     }
     return count >= shipSize;  
 }
-
 
 bool Ships::allShipPlaced(const std::vector<Boat>& boats, const std::vector<std::vector<char>>& board) {
     for (const auto& boat : boats) {

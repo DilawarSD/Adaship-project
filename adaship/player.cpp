@@ -37,7 +37,7 @@ void Player::playerMove(std::vector<std::vector<char>> &board) {
       // Convert the column character to uppercase
       char colChar = std::toupper(move[0]);
       // Validate the move
-      col = colChar - 'A'; // Convert column character to index (0-based)
+      col = colChar - 'A'; 
       row = std::stoi(move.substr(1)) - 1;
     } else if (std::toupper(choice) == 'A') {
       // Auto-fire option
@@ -65,12 +65,12 @@ void Player::playerMove(std::vector<std::vector<char>> &board) {
     // Process the valid move (manual or auto)
     if (board[row][col] == 'S') {
       std::cout << "It's a HIT!" << std::endl;
-      board[row][col] = 'X'; // Mark the cell as a hit
+      board[row][col] = 'X'; 
       playerHits++;
     } else {
-      std::cout << "It's a MISS! Target cell contains: " << board[row][col]
+      std::cout << "It's a MISS!" << board[row][col]
                 << std::endl;
-      board[row][col] = 'O'; // Mark the cell as a miss
+      board[row][col] = 'O'; 
       playerMisses++;
     }
     break;

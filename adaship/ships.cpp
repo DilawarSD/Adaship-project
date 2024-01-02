@@ -95,7 +95,7 @@ void Ships::autoPlaceShip(const Boat& boat, const Config& config, std::vector<st
     std::uniform_int_distribution<> dis(0, config.boardSize - 1);
     std::uniform_int_distribution<> orientation(0, 1);
 
-    char shipSymbol = (isPlayer) ? 'S' : 'S';  // Use 'S' for player's ships
+    char shipSymbol = (isPlayer) ? 'S' : 'S';  
     do {
         startRow = dis(gen);
         startCol = dis(gen);
@@ -118,8 +118,7 @@ void Ships::manualPlaceAllShips(const std::vector<Boat>& boats, const Config& co
         char resetChoice;
 
         do {
-            std::vector<Boat> remainingBoats = boats;  // Initialize the list of remaining boats
-
+            std::vector<Boat> remainingBoats = boats;  
             // Ask if the user wants to manually place ships
             std::cout << "Do you want to manually place ships? (Select No for autoplacing) (Y/N): ";
             std::cin >> manualPlaceChoice;
@@ -152,7 +151,6 @@ void Ships::manualPlaceAllShips(const std::vector<Boat>& boats, const Config& co
                     // Display the board after auto-placement
                     displayBoard(board, false);
                 }
-
                 // Ask if the user wants to manually place the next ship
                 std::cout << "Do you want to manually place the next ship? (Y/N): ";
                 std::cin >> manualPlaceChoice;
@@ -162,14 +160,12 @@ void Ships::manualPlaceAllShips(const std::vector<Boat>& boats, const Config& co
                     std::cin >> manualPlaceChoice;
                 }
             }
-
             // Auto-placement for the remaining ships
             for (const auto& boat : remainingBoats) {
                 autoPlaceShip(boat, config, board);
             }
             // Display the board after auto-placement
             displayBoard(board, false);
-
             // Ask if the user wants to reset the board and replace the ships
             std::cout << "Do you want to reset the board or continue? (R/C): ";
             std::cin >> resetChoice;
@@ -202,16 +198,16 @@ bool Ships::isShipPlaced(const Boat& boat, const std::vector<std::vector<char>>&
 bool Ships::allShipPlaced(const std::vector<Boat>& boats, const std::vector<std::vector<char>>& board) {
     for (const auto& boat : boats) {
         if (!isShipPlaced(boat, board)) {
-            return false;  // At least one ship is not placed
+            return false;  
         }
     }
-    return true;  // All ships are placed
+    return true;  
 }
 
 void Ships::resetShipboard(std::vector<std::vector<char>>& board) {
     for (auto& row : board) {
         for (auto& cell : row) {
-            cell = ' ';  // Reset the cell to empty
+            cell = ' ';  
         }
     }
 }

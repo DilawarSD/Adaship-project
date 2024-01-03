@@ -35,7 +35,7 @@ bool areAllShipsPlaced() const {
 
 
 private:
-bool shipsPlaced;  // Add this member variable
+bool shipsPlaced; 
 bool isPlayer;
 };
 

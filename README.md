@@ -48,6 +48,82 @@ One bug issue that I and resolve was when the player needs to hit the computers 
 ## Reflection on key designs challenges 
 One challange that I faced was making sure the boards are seperate for player and computer. As at first when implementing this I had both computer and player ships on the same board which it shouldn't. The solution for this was was giving computer access to board but having a seperate for name compared to the player board for an example computer would be computerBoard while player would be playerBoard. 
 
-Another challenge I had avoiding code dupilcation such as for player to be used in the game file not repeating all the but being to get access to use due to encapsulated on the class and using inheritance to reuse the code to help keep good coding standard and maintain readability. 
+Another challenge I had was avoiding code dupilcation such as for player to be used in the game file not repeating all the but being to get access to use due to encapsulated on the class and using inheritance to reuse the code to help keep good coding standard and maintain readability. 
 
 # Evaluation 
+## Analysis
+For code refactoring I had to split my code for my player.cpp file as I only had one functon which is called playerMove and that had contained if the user would like to make a move on the board and also if they would want to manually fire or auto fire the opponents board. So I decided to split that into two functions to keep the code maintained and easier to understand. Here is the code below which is after I have refactored the code. 
+
+void Player::getMoveFromUser(int& row, int& col, const std::vector<std::vector<char>>& board) const {
+    std::string move;
+
+    while (true) {
+        // Get the player's move (row and column)
+        std::cout << "Enter your move (e.g., A1, F6): ";
+        // Check if the input is valid
+        if (!(std::cin >> move) || move.size() < 2 || !isalpha(move[0]) || !isdigit(move[1])) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input. Please enter a valid move in the format 'A1' or 'F6'." << std::endl;
+            continue;
+        }
+        // Convert the column character to uppercase
+        char colChar = std::toupper(move[0]);
+        // Validate the move
+        col = colChar - 'A';  // Convert column character to index (0-based)
+        row = std::stoi(move.substr(1)) - 1;
+
+        // Check if the move is out of bounds
+        if (row < 0 || row >= board.size() || col < 0 || col >= board[0].size()) {
+            std::cout << "Invalid move. Cell is out of bounds." << std::endl;
+            continue;
+        }
+        // Check if the cell has already been hit
+        if (board[row][col] == 'X' || board[row][col] == 'O') {
+            std::cout << "Invalid move. Cell has already been hit. Please try again." << std::endl;
+            continue;
+        }
+        break;  
+    }
+}
+
+void Player::playerMove(std::vector<std::vector<char>>& board) {
+    int row, col;
+    displayBoard(board, true);  
+    // Ask the user for input or auto-fire
+    std::cout << "Do you want to manually input your move (M) or auto-fire (A)? ";
+    char choice;
+    std::cin >> choice;
+
+    if (std::toupper(choice) == 'M') {
+        // Get the player's move from the user
+        getMoveFromUser(row, col, board);
+    } else if (std::toupper(choice) == 'A') {
+        // Auto-fire option
+        row = rand() % board.size();
+        col = rand() % board[0].size();
+        std::cout << "Auto-firing at cell " << static_cast<char>('A' + col) << row + 1 << "..." << std::endl;
+    } else {
+        std::cout << "Invalid choice. Please enter 'M' for manual input or 'A' for auto-fire." << std::endl;
+        return;  
+    }
+    // Process the valid move (manual or auto)
+    if (board[row][col] == 'S') {
+        std::cout << "It's a HIT!" << std::endl;
+        board[row][col] = 'X';  // Mark the cell as a hit
+        playerHits++;
+    } else {
+        std::cout << "It's a MISS! Target cell contains: " << board[row][col] << std::endl;
+        board[row][col] = 'O';  // Mark the cell as a miss
+        playerMisses++;
+    }
+}
+
+## Implementation and effective use of advanced programming principles
+
+## Features showcase and embedded innovations
+
+## Improved algorithms 
+
+## Reflective Review
+Overall my review on my project as a whole was a good experience to be able to structure my code understanding of good planning and using object-oriented ideas. However at the beginning of the project I did struggle to connect the files to work with each other but that was quickly resolved as I created a new replit and started from scratch and made sure to take my time in making sure that the headers file were done right and connecting the files to each other. The important thing I would take on to continue my growth as a programmer is taking all the things I spoke about which were structing of code, before starting having a good plan and set task to complete and another part is making sure to not have large functions but break them down into smaller functions. 

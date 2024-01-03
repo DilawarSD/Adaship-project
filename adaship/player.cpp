@@ -37,14 +37,13 @@ void Player::getMoveFromUser(int& row, int& col, const std::vector<std::vector<c
             std::cout << "Invalid move. Cell has already been hit. Please try again." << std::endl;
             continue;
         }
-        break;  // Exit the loop if the move is valid
+        break;  
     }
 }
 
 void Player::playerMove(std::vector<std::vector<char>>& board) {
     int row, col;
-    displayBoard(board, true);  // Display the current state of the board (hide ships)
-
+    displayBoard(board, true);  
     // Ask the user for input or auto-fire
     std::cout << "Do you want to manually input your move (M) or auto-fire (A)? ";
     char choice;
@@ -60,9 +59,8 @@ void Player::playerMove(std::vector<std::vector<char>>& board) {
         std::cout << "Auto-firing at cell " << static_cast<char>('A' + col) << row + 1 << "..." << std::endl;
     } else {
         std::cout << "Invalid choice. Please enter 'M' for manual input or 'A' for auto-fire." << std::endl;
-        return;  // Do not proceed with an invalid choice
+        return;  
     }
-
     // Process the valid move (manual or auto)
     if (board[row][col] == 'S') {
         std::cout << "It's a HIT!" << std::endl;

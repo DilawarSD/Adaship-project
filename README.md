@@ -33,7 +33,7 @@ Validation:
 Winning Criteria:
 - The player who eliminates all the ships on the opponent's board wins.
 
-## UML Design 
+## B. UML Design 
 
 I created a UML design on Miro which shows how I planned out my approach on this project here is the link to the diagram: 
 https://miro.com/app/board/uXjVN-fMcaw=/?share_link_id=742835749716 

@@ -255,6 +255,7 @@ The code that is commented which is about the position was never used and was re
 ## Implementation and effective use of advanced programming principles
 
 1. Inheritance
+
 One principle idea I used was inheritance this helps to make sure that you are able to reuse code without any duplication of the code. For an example for both computer and player files I was able to use them in my game.cpp file without duplicating code for me to use them to allow both player and computer play the ADAship game. Here is how I reused the code from player and computer.cpp file. 
 
 void Game::playerMove(std::vector<std::vector<char>> &board) {
@@ -271,6 +272,7 @@ void Game::computerMove(std::vector<std::vector<char>> &board) {
 This allows me to have access to the computer and player code files without any sorts of duplication and keeps the code easier to maintain and is structured well. 
 
 2. Abstraction
+
 Another principle idea used is abstraction in my boat struct which is in my config.h file. This allows me to able to use the boat name and sizes.  This struct boat is very efficient as this abstraction allows me to use all the relevant data about the boat which reduces complexity within the code.
 
 struct Boat {
@@ -282,6 +284,7 @@ struct Boat {
 };
 
 3. Encapsulation
+
 For encapsulation I have used this a lot in my project as I have a lot of classes that demostrate this I will show you one example of my code where I have used this in my ships.h file.
 
 class Ships {

@@ -88,7 +88,9 @@ This allows me use my player class function from my player.cpp without me duplic
 
 For code smelling one example that I had was in my boat struct I had code that wasn't used in when creating my program. This was then commented out and later on removed as I have mentioned that this code was never used. 
 
-The code that is commented which is about teh position was never used and was removed from my code as it wasn't used. 
+
+The code that is commented which is about the position was never used and was removed from my code as it wasn't used. 
+
 
 ## Implementation and effective use of advanced programming principles
 One principle idea I used was inheritance this helps to make sure that you are able to reuse code without any duplication of the code. For an example for both computer and player files I was able to use them in my game.cpp file without duplicating code for me to use them to allow both player and computer play the ADAship game. Here is how I reused the code from player and computer.cpp file. 

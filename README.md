@@ -4,28 +4,38 @@
 
 ## A. Summary and Review
 This is my project which is called ADASHIP which is based off the game called battleship in C++. The battleship game has several key components that I had face before implementing the functionality which are:
+
 Game Board:
 - Displaying the game board.
 - Ensuring proper visualization of the board.
 Ship Placement:
 - Manual or auto-placement of ships.
 - Different ships with names and sizes (e.g., Carrier size 5, Battleship size 4).
+
 Players:
 - Interactions with the game.
 - Each player has their own set of ships and board.
 - Players go up against the computer.
 Turn System:
 - Alternating turns between the player and the computer.
+
 Attack Mechanism:
 - Players and computer can attack.
 - Outcome of attack: Hit or miss, based on the cell targeted.
 - If the attacked cell is empty, it's a miss; if it contains a ship, it's a hit.
+  
 Validation:
 - Checking for valid moves.
 - Ensuring attacks within the bounds of the board (e.g., A12 on a 10x10 board is out of bounds).
 - Preventing repeated attacks on the same spot.
+  
 Winning Criteria:
 - The player who eliminates all the ships on the opponent's board wins.
+
+## UML Design 
+
+I created a UML design on Miro which shows how I planned out my approach on this project here is the link to the diagram: 
+https://miro.com/app/board/uXjVN-fMcaw=/?share_link_id=742835749716 
 
 
 ## C. Initial Working Plan

@@ -319,7 +319,8 @@ bool isPlayer;
 Here I have demostrated encapsulation as within this class I have shown private member functions which means they can only be accessed or modified by the member functions of the class. Public member provides an interface for interacting with the class and allows manipulation and retrieval of the class's internal state. The states used for an example shipsplaced manages the states of the ships being placed and isplayer represents the player.  All of these variables are accessed through member function. 
 
 ## Features showcase and embedded innovations
-1. Computer.cpp 
+1. Computer.cpp
+
 I want to show my showcase on my computer.cpp function to show how I was able to implement the computer to be able to make randomise moves that doesn't have a pattern during the game battleship experience. 
 
 Computer::Computer() { std::srand(std::time(0)); }
@@ -347,6 +348,7 @@ The features the computer make unpredicted moves with 'std::rand()' and helps to
 The good the randomise feature is the engaging player experience as for the player it will keep them engaged as they wouldn't know what computer move will be, this would result in replayability as each time the user(player) plays the game it will feel fresh and new as the computer attacking the board will always be different. 
 
 2. Game.cpp
+
 Another one I would like to showcase is my game.cpp file to show how I implemented the game to work with the player and computer taking turns.
 
 void Game::play() {

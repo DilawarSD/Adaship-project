@@ -56,259 +56,35 @@ Another challenge I had was avoiding code dupilcation such as for player to be u
 ## Analysis
 For code refactoring I had to split my code for my player.cpp file as I only had one functon which is called playerMove and that had contained if the user would like to make a move on the board and also if they would want to manually fire or auto fire the opponents board. So I decided to split that into two functions to keep the code maintained and easier to understand. Here is the code below which is after I have refactored the code. 
 
-void Player::getMoveFromUser(int& row, int& col, const std::vector<std::vector<char>>& board) const {
-    std::string move;
-
-    while (true) {
-        // Get the player's move (row and column)
-        std::cout << "Enter your move (e.g., A1, F6): ";
-        // Check if the input is valid
-        if (!(std::cin >> move) || move.size() < 2 || !isalpha(move[0]) || !isdigit(move[1])) {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Invalid input. Please enter a valid move in the format 'A1' or 'F6'." << std::endl;
-            continue;
-        }
-        // Convert the column character to uppercase
-        char colChar = std::toupper(move[0]);
-        // Validate the move
-        col = colChar - 'A';  // Convert column character to index (0-based)
-        row = std::stoi(move.substr(1)) - 1;
-
-        // Check if the move is out of bounds
-        if (row < 0 || row >= board.size() || col < 0 || col >= board[0].size()) {
-            std::cout << "Invalid move. Cell is out of bounds." << std::endl;
-            continue;
-        }
-        // Check if the cell has already been hit
-        if (board[row][col] == 'X' || board[row][col] == 'O') {
-            std::cout << "Invalid move. Cell has already been hit. Please try again." << std::endl;
-            continue;
-        }
-        break;  
-    }
-}
-
-void Player::playerMove(std::vector<std::vector<char>>& board) {
-    int row, col;
-    displayBoard(board, true);  
-    // Ask the user for input or auto-fire
-    std::cout << "Do you want to manually input your move (M) or auto-fire (A)? ";
-    char choice;
-    std::cin >> choice;
-
-    if (std::toupper(choice) == 'M') {
-        // Get the player's move from the user
-        getMoveFromUser(row, col, board);
-    } else if (std::toupper(choice) == 'A') {
-        // Auto-fire option
-        row = rand() % board.size();
-        col = rand() % board[0].size();
-        std::cout << "Auto-firing at cell " << static_cast<char>('A' + col) << row + 1 << "..." << std::endl;
-    } else {
-        std::cout << "Invalid choice. Please enter 'M' for manual input or 'A' for auto-fire." << std::endl;
-        return;  
-    }
-    // Process the valid move (manual or auto)
-    if (board[row][col] == 'S') {
-        std::cout << "It's a HIT!" << std::endl;
-        board[row][col] = 'X';  // Mark the cell as a hit
-        playerHits++;
-    } else {
-        std::cout << "It's a MISS! Target cell contains: " << board[row][col] << std::endl;
-        board[row][col] = 'O';  // Mark the cell as a miss
-        playerMisses++;
-    }
-}
-
 I also used code reusability as well with the player function as I needed to use this functionality in my game file. This is the code I used for reusability. 
-
-void Game::playerMove(std::vector<std::vector<char>> &board) {
-  Player player; 
-  player.playerMove(
-      board); 
-}
 
 This allows me use my player class function from my player.cpp without me duplicating the code. 
 
 For code smelling one example that I had was in my boat struct I had code that wasn't used in when creating my program. This was then commented out and later on removed as I have mentioned that this code was never used. 
 
-struct Boat {
-  std::string name;
-  int size;
-  //std::pair<int, int> position;
-
-  Boat(const std::string &boatName, int boatSize)
-      : name(boatName), size(boatSize) {}
-};
-The code that is commented which is about teh position was never used and was removed from my code as it wasn't used. 
+The code that is commented which is about the position was never used and was removed from my code as it wasn't used. 
 
 ## Implementation and effective use of advanced programming principles
 One principle idea I used was inheritance this helps to make sure that you are able to reuse code without any duplication of the code. For an example for both computer and player files I was able to use them in my game.cpp file without duplicating code for me to use them to allow both player and computer play the ADAship game. Here is how I reused the code from player and computer.cpp file. 
 
-void Game::playerMove(std::vector<std::vector<char>> &board) {
-  Player player; 
-  player.playerMove(
-      board); 
-}
-
-void Game::computerMove(std::vector<std::vector<char>> &board) {
-  Computer computer;
-  computer.computerMove(board);
-}
 This allows me to have access to the computer and player code files without any sorts of duplication and keeps the code easier to maintain and is structured well. 
 
 Another principle idea used is abstraction in my boat struct which is in my config.h file. This allows me to able to use the boat name and sizes. 
 
-struct Boat {
-  std::string name;
-  int size;
-
-  Boat(const std::string &boatName, int boatSize)
-      : name(boatName), size(boatSize) {}
-};
 This struct boat is very efficient as this abstraction allows me to use all the relevant data about the boat which reduces complexity within the code. 
 
 For encapsulation I have used this a lot in my project as I have a lot of classes that demostrate this I will show you one example of my code where I have used this in my ships.h file. 
-
-class Ships {
-public:
-Ships() : shipsPlaced(false) {}
-
-static bool isValidPlacement(int startRow, int startCol, int size, bool isHorizontal, const std::vector<std::vector<char>>& board);
-
-void autoPlaceShip(const Boat& boat, const Config& config, std::vector<std::vector<char>>& board);
-
-void manualPlaceShip(const Boat& boat, const Config& config, std::vector<std::vector<char>>& board);
-
-void manualPlaceAllShips(const std::vector<Boat>& boats, const Config& config, std::vector<std::vector<char>>& board);
-
-void autoPlaceRemainingShips(const std::vector<Boat>& boats, const Config& config, std::vector<std::vector<char>>& board);
-
-static bool isShipPlaced(const Boat& boat, const std::vector<std::vector<char>>& board);
-
-static bool allShipPlaced(const std::vector<Boat>& boats, const std::vector<std::vector<char>>& board);
-
-static void resetShipboard(std::vector<std::vector<char>>& board);
-
-Ships(bool isPlayer);
-
-bool areAllShipsPlaced() const {
-    return shipsPlaced;
-}
-
-
-private:
-bool shipsPlaced;  
-bool isPlayer;
-};
 
 Here I have demostrated encapsulation as within this class I have shown private member functions which means they can only be accessed or modified by the member functions of the class. Public member provides an interface for interacting with the class and allows manipulation and retrieval of the class's internal state. The states used for an example shipsplaced manages the states of the ships being placed and isplayer represents the player.  All of these variables are accessed through member function. 
 
 ## Features showcase and embedded innovations
 I want to show my showcase on my computer.cpp function to show how I was able to implement the computer to be able to make randomise moves that doesn't have a pattern during the game battleship experience. 
 
-Computer::Computer() { std::srand(std::time(0)); }
-
-void Computer::computerMove(std::vector<std::vector<char>> &board) {
-  // Seed for random number generation
-  int row, col;
-  // Generate random moves without checking validity
-  row = std::rand() % board.size();
-  col = std::rand() % board[0].size();
-  // Process the move
-  if (board[row][col] == 'S') {
-    std::cout << "Computer hit your ship!" << std::endl;
-    computerHits++;
-    board[row][col] = 'X'; 
-  } else {
-    std::cout << "Computer missed." << std::endl;
-    computerMisses++;
-    board[row][col] = 'O'; 
-  }
-}
-
 The features the computer make unpredicted moves with 'std::rand()' and helps to keep the gaming experience engagaing. The hit and miss feedback features makes a move on the player board when attacking their ships if the computer hits the players ship the response will be computer hit your ship, while if they ended up not hitting the opponents the ship it will be computer missed. 
 
 The good the randomise feature is the engaging player experience as for the player it will keep them engaged as they wouldn't know what computer move will be, this would result in replayability as each time the user(player) plays the game it will feel fresh and new as the computer attacking the board will always be different. 
 
 Another one I would like to showcase is my game.cpp file to show how I implemented the game to work with the player and computer taking turns.
-
-Game::Game(const Config &config) : config(config) { std::srand(std::time(0)); }
-
-std::vector<std::vector<char>> Game::initializeBoard() const {
-  return config.initializeBoard();
-}
-
-// Player move function with improved error handling
-void Game::playerMove(std::vector<std::vector<char>> &board) {
-  Player player; // Create an instance of the Player class
-  player.playerMove(
-      board); // Delegate to the playerMove function in the Player class
-}
-
-void Game::computerMove(std::vector<std::vector<char>> &board) {
-  Computer computer;
-  computer.computerMove(board);
-}
-
-bool Game::checkWin(const std::vector<std::vector<char>> &board) const {
-  for (const auto &row : board) {
-    for (char cell : row) {
-      if (cell == 'S') {
-        return false; 
-      }
-    }
-  }
-  return true; 
-}
-
-void Game::placeShips(std::vector<Boat> &boats, Ships &playerShips,
-                      Ships &computerShips, const Config &config) {
-  // Place ships manually
-  playerShips.manualPlaceAllShips(boats, config, playerBoard);
-  displayBoard(playerBoard,false);
-
-  for (const auto &boat : boats) {
-    computerShips.autoPlaceShip(boat, config, computerBoard);
-  }
-}
-
-void Game::play() {
-  playerBoard = initializeBoard();
-  computerBoard = initializeBoard();
-  Ships playerShips(true); 
-  Ships computerShips(false);
-  // Get the list of boats from the configuration
-  std::vector<Boat> boats = config.getBoats();
-  // Place ships
-  placeShips(boats, playerShips, computerShips, config);
-  // Player vs Computer gameplay
-  while (true) {
-    // Player's turn
-    std::cout << "Player's turn:" << std::endl;
-    displayBoard(playerBoard,false); // Use player's board
-    playerMove(computerBoard); // Pass computer's board to playerMove
-    // Check if the player has won
-    if (checkWin(computerBoard)) {
-      displayBoard(
-          computerBoard,true); // Display the final state of the computer's board
-      std::cout << "Congratulations! You win!" << std::endl;
-      break;
-    }
-    // Computer's turn
-    std::cout << "Computer's turn:" << std::endl;
-    displayBoard(computerBoard,false); // Use computer's board for display
-    computerMove(playerBoard);   // Pass player's board to computerMove
-    // Check if the computer has won
-    if (checkWin(playerBoard)) {
-      displayBoard(
-          playerBoard,false); // Display the final state of the player's board
-      std::cout << "Computer wins! Better luck next time." << std::endl;
-      break;
-    }
-  }
-}
 
 The game is able to initialize the board dynamically based on my config class that I created. This allows flexible game setup with various configurations to allow adaptability of the game for an example if I want to change the board from 10x10 to 20x20 or 8x8 it will be able to make that change. 
 
@@ -327,7 +103,6 @@ The game loop being continous to keep the flow of the game going without it brea
 This game file will allow a combination of dynamic initialsation, ship placement and gameplay that will allow the players to enjoy the experience of the game. This also allows win condition add strategic depth to the game as the players need to think about the their moves of where the ships are placed and also hitting the computers ship. Finally the adaptablilty of the config class having wide range of preferences for an example changing the board size, boat size and name in the adaship_config.ini text file. 
 
 ## Improved algorithms 
-
 
 ## Reflective Review
 Overall my review on my project as a whole was a good experience to be able to structure my code understanding of good planning and using object-oriented ideas. However at the beginning of the project I did struggle to connect the files to work with each other but that was quickly resolved as I created a new replit and started from scratch and made sure to take my time in making sure that the headers file were done right and connecting the files to each other. The important thing I would take on to continue my growth as a programmer is taking all the things I spoke about which were structing of code, before starting having a good plan and set task to complete and another part is making sure to not have large functions but break them down into smaller functions. 

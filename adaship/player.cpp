@@ -67,7 +67,7 @@ void Player::playerMove(std::vector<std::vector<char>>& board) {
         board[row][col] = 'X';  // Mark the cell as a hit
         playerHits++;
     } else {
-        std::cout << "It's a MISS! Target cell contains: " << board[row][col] << std::endl;
+        std::cout << "It's a MISS!" << board[row][col] << std::endl;
         board[row][col] = 'O';  // Mark the cell as a miss
         playerMisses++;
     }

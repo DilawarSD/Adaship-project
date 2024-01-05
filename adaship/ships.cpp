@@ -48,7 +48,6 @@ void Ships::manualPlaceShip(const Boat &boat, const Config &config,
                             std::vector<std::vector<char>> &board) {
   int startRowIndex, startColIndex;
   int size = boat.size; // Use the boat size
-
   while (true) {
     std::cout << "Enter the placement for " << boat.name << " (size " << size
               << "): ";
@@ -135,6 +134,7 @@ void Ships::manualPlaceAllShips(const std::vector<Boat> &boats,
     do {
       std::vector<Boat> remainingBoats =
           boats; // Initialize the list of remaining boats
+      displayBoard(board,false);
       std::cout << "Do you want to manually place ships? (Select No for "
                    "autoplacing) (Y/N): ";
       std::cin >> manualPlaceChoice;

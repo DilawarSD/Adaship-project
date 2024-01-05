@@ -30,7 +30,7 @@ void Menu::executeMenuOption() {
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(),
                       '\n'); // Ignore remaining characters
     }
-
+    
     switch (choice) {
     case 1: {
       // Specify the configuration file

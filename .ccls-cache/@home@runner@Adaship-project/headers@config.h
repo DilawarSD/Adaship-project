@@ -8,7 +8,6 @@
 struct Boat {
   std::string name;
   int size;
-  //std::pair<int, int> position;
 
   // Constructor for Boat
   Boat(const std::string &boatName, int boatSize)

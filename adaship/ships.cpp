@@ -22,7 +22,7 @@ bool Ships::isValidPlacement(int startRow, int startCol, int size,
   // Check if the ship fits within the board
   if (isHorizontal) {
     if (startCol + size > board[0].size()) {
-      return false; // Ship goes beyond the right edge of the board
+      return false; 
     }
   } else {
     if (startRow + size > board.size()) {
@@ -47,7 +47,7 @@ bool Ships::isValidPlacement(int startRow, int startCol, int size,
 void Ships::manualPlaceShip(const Boat &boat, const Config &config,
                             std::vector<std::vector<char>> &board) {
   int startRowIndex, startColIndex;
-  int size = boat.size; // Use the boat size
+  int size = boat.size; 
   while (true) {
     std::cout << "Enter the placement for " << boat.name << " (size " << size
               << "): ";
@@ -113,7 +113,7 @@ void Ships::autoPlaceShip(const Boat &boat, const Config &config,
     isHorizontal = orientation(gen) == 0;
 
   } while (!isValidPlacement(startRow, startCol, size, isHorizontal, board));
-  // Update the board based on the randomly chosen valid position and
+  // Update the board based on the randomly chosen valid position
   // orientation
   for (int i = 0; i < size; ++i) {
     if (isHorizontal) {
@@ -182,7 +182,7 @@ void Ships::manualPlaceAllShips(const std::vector<Boat> &boats,
       }
       // Display the board after auto-placement
       displayBoard(board, false);
-      // Ask if the user wants to reset the board and replace the ships
+      
       std::cout << "Do you want to reset the board or continue? (R/C): ";
       std::cin >> resetChoice;
       // Validate the input

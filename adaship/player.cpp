@@ -12,7 +12,6 @@ void Player::getMoveFromUser(int& row, int& col, const std::vector<std::vector<c
     std::string move;
 
     while (true) {
-        // Get the player's move (row and column)
         std::cout << "Enter your move (e.g., A1, F6): ";
         // Check if the input is valid
         if (!(std::cin >> move) || move.size() < 2 || !isalpha(move[0]) || !isdigit(move[1])) {
@@ -24,7 +23,7 @@ void Player::getMoveFromUser(int& row, int& col, const std::vector<std::vector<c
         // Convert the column character to uppercase
         char colChar = std::toupper(move[0]);
         // Validate the move
-        col = colChar - 'A';  // Convert column character to index (0-based)
+        col = colChar - 'A';  
         row = std::stoi(move.substr(1)) - 1;
 
         // Check if the move is out of bounds
@@ -44,7 +43,6 @@ void Player::getMoveFromUser(int& row, int& col, const std::vector<std::vector<c
 void Player::playerMove(std::vector<std::vector<char>>& board) {
     int row, col;
     displayBoard(board, true);  
-    // Ask the user for input or auto-fire
     std::cout << "Do you want to manually input your move (M) or auto-fire (A)? ";
     char choice;
     std::cin >> choice;
@@ -64,11 +62,11 @@ void Player::playerMove(std::vector<std::vector<char>>& board) {
     // Process the valid move (manual or auto)
     if (board[row][col] == 'S') {
         std::cout << "It's a HIT!" << std::endl;
-        board[row][col] = 'X';  // Mark the cell as a hit
+        board[row][col] = 'X';  
         playerHits++;
     } else {
         std::cout << "It's a MISS!" << board[row][col] << std::endl;
-        board[row][col] = 'O';  // Mark the cell as a miss
+        board[row][col] = 'O';  
         playerMisses++;
     }
 }

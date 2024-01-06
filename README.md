@@ -159,6 +159,7 @@ Another challenge I had was avoiding code dupilcation such as for player to be u
 
 ## Analysis
 1. Code Refactoring
+
 For code refactoring I had to split my code up for my player.cpp file as I only had one functon which is called playerMove and that had contained if the user would like to make a move on the board and also if they would want to manually fire or auto fire the opponents board. So I decided to split that into two functions to keep the code maintained and easier to understand. Here is the code below that I had refactored. 
 
 void Player::getMoveFromUser(int& row, int& col, const std::vector<std::vector<char>>& board) const {
@@ -227,6 +228,7 @@ void Player::playerMove(std::vector<std::vector<char>>& board) {
 }
 
 2. Reusability
+
 I also used code reusability as well with the player function as I needed to use this functionality in my game file. This is the code I used for reusability. Here is the code below.
 
 void Game::playerMove(std::vector<std::vector<char>> &board) {
@@ -237,7 +239,8 @@ void Game::playerMove(std::vector<std::vector<char>> &board) {
 
 This allows me use my player class function from my player.cpp without me duplicating the code. 
 
-3. Code Smelling 
+3. Code Smelling
+
 For code smelling one example that I had was in my boat struct I had code that wasn't used in when creating my program. This was then commented out and later on removed as I have mentioned that this code was never used. 
 
 struct Boat {
@@ -396,6 +399,54 @@ The win condition will check the game win condition after each players move. The
 This game file will allow a combination of dynamic initialsation, ship placement and gameplay that will allow the players to enjoy the experience of the game. This also allows win condition add strategic depth to the game as the players need to think about the their moves of where the ships are placed and also hitting the computers ship. Finally the adaptablilty of the config class having wide range of preferences for an example changing the board size, boat size and name in the adaship_config.ini text file. 
 
 ## Improved algorithms 
+
+1. Research:
+
+I began by researching existing algorithms and strategies commonly used in Battleship-style games. I explored various approaches with ways to create to make it feel like an actually battlegame ship which is that when they play the players don't know where the ships are placed when they go against each other.
+
+2. Design:
+
+Based on the research findings, I designed an algorithm that aims to strike to make it feel like a actually battleship game by making sure the opponents ships were not visible for the player. The design included to keep the same board but after the computer places ships you don't see them during the players turn of attacking the computer ships and during computer ships turn aswell.
+
+3. Implementation:
+
+I translated the designed algorithm into code, incorporating it into the ship placement functionality of the ADASHIP board. This involved modifying the existing code to replace the board logic with the new algorithm. The implementation focused on ensuring that the algorithm seamlessly integrated with the overall structure of the game.
+
+4. testing:
+
+Testing was a crucial step to confirm the effectiveness of the new board that was displayed. I conducted manual testing and regression to where I checked to see if the boolean hideOppenentShips does work. Overall the performance of this worked well as when I assigned true to be on the computer board the ships were not visible anymore which made it feel like an actually battleship game of not knowing where the opponent has placed their ships, which contributed in player engagement and experience.
+
+Here is the updated version of the displayBoard function that allows the ships to not be visible on the board during the attacking phase. 
+
+void displayBoard(const std::vector<std::vector<char>> &board, bool hideOpponentShips) {
+  std::cout << "   ";
+    for (int i = 0; i < board.size(); ++i) {
+        char colLabel = 'A' + i;
+        std::cout << colLabel << "  ";
+    }
+    std::cout << "\n";
+    for (int i = 0; i < board.size(); ++i) {
+        std::cout << "-";
+        for (int j = 0; j < board[i].size(); ++j) {
+            std::cout << "----";
+        }
+        std::cout << "\n";
+        std::cout << i + 1 << "|";
+        for (int j = 0; j < board[i].size(); ++j) {
+            if (hideOpponentShips && board[i][j] == 'S') {
+                std::cout << " " << " |"; 
+            } else {
+                std::cout << " " << board[i][j] << "|";
+            }
+        }
+        std::cout << "\n";
+    }
+    std::cout << "-";
+    for (int i = 0; i < board.size(); ++i) {
+        std::cout << "----";
+    }
+    std::cout << "\n";
+}
 
 ## Reflective Review
 Overall my review on my project as a whole was a good experience to be able to structure my code understanding of good planning and using object-oriented ideas. However at the beginning of the project I did struggle to connect the files to work with each other but that was quickly resolved as I created a new replit and started from scratch and made sure to take my time in making sure that the headers file were done right and connecting the files to each other. The important thing I would take on to continue my growth as a programmer is taking all the things I spoke about which were structing of code, before starting having a good plan and set task to complete and another part is making sure to not have large functions but break them down into smaller functions. 

@@ -73,7 +73,7 @@ void Game::play() {
     }
     // Computer's turn
     std::cout << "Computer's turn:" << std::endl;
-    displayBoard(computerBoard,true); // Use computer's board for display
+    displayBoard(computerBoard,false); // Use computer's board for display
     computerMove(playerBoard);   // Pass player's board to computerMove
     // Check if the computer has won
     if (checkWin(playerBoard)) {
